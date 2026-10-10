@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ student.name }}{% endblock %}
+{% block content %}
+<div class="app-card mx-auto" style="max-width: 560px;">
+  <div class="detail-banner"></div>
+  <div class="px-4 pb-4">
+    <div class="detail-avatar-wrap d-flex align-items-end justify-content-between">
+      <div class="avatar lg">{{ student.name[0]|upper }}</div>
+      <div class="d-flex gap-2 pb-1">
+        <a href="{{ url_for('edit', student_id=student.id) }}" class="icon-btn edit" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+      </div>
+    </div>
+    <h4 class="fw-bold mt-3 mb-0">{{ student.name }}</h4>
+    <p class="text-muted mb-3">{{ student.course }} · Year {{ student.year }}</p>
+
+    <div class="detail-row"><span>Roll No</span><span>{{ student.roll_no }}</span></div>
+    <div class="detail-row"><span>Email</span><span>{{ student.email }}</span></div>
+    <div class="detail-row"><span>Phone</span><span>{{ student.phone or '—' }}</span></div>
+    <div class="detail-row"><span>Course</span><span>{{ student.course }}</span></div>
+    <div class="detail-row"><span>Year</span><span>{{ student.year }}</span></div>
+
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary mt-4" style="border-radius:10px">
+      <i class="bi bi-arrow-left me-1"></i>Back to list
+    </a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ mode }} Student{% endblock %}
+{% block content %}
+<div class="app-card mx-auto" style="max-width: 680px;">
+  <div class="p-4 pb-0">
+    <h4 class="fw-bold mb-1">
+      <i class="bi {{ 'bi-person-plus-fill' if mode == 'Add' else 'bi-pencil-square' }} text-primary me-2"></i>{{ mode }} Student
+    </h4>
+    <p class="text-muted">Fields marked * are required.</p>
+  </div>
+  <div class="p-4 pt-2">
+    <form method="post" novalidate>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Roll No *</label>
+          <input name="roll_no" class="form-control" value="{{ student.roll_no or '' }}" placeholder="e.g. IT001" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Full Name *</label>
+          <input name="name" class="form-control" value="{{ student.name or '' }}" placeholder="e.g. Asha Patil" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Email *</label>
+          <input name="email" type="email" class="form-control" value="{{ student.email or '' }}" placeholder="name@example.com" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Phone (10 digits)</label>
+          <input name="phone" class="form-control" value="{{ student.phone or '' }}" placeholder="9876543210">
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">Course *</label>
+          <input name="course" class="form-control" value="{{ student.course or '' }}" placeholder="e.g. B.Sc. IT" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Year *</label>
+          <select name="year" class="form-select" required>
+            {% for y in [1, 2, 3, 4] %}
+              <option value="{{ y }}" {{ 'selected' if student.year|string == y|string else '' }}>Year {{ y }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-primary-app"><i class="bi bi-check-lg me-1"></i>Save</button>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary" style="border-radius:10px">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

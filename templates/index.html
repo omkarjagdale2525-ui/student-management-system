@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Stat cards -->
+<div class="row g-3 mb-4">
+  <div class="col-12 col-md-4">
+    <div class="app-card stat-card">
+      <div class="stat-icon indigo"><i class="bi bi-people-fill"></i></div>
+      <div><div class="stat-value">{{ total }}</div><div class="stat-label">Total Students</div></div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="app-card stat-card">
+      <div class="stat-icon teal"><i class="bi bi-journal-bookmark-fill"></i></div>
+      <div><div class="stat-value">{{ courses|length }}</div><div class="stat-label">Courses</div></div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="app-card stat-card">
+      <div class="stat-icon amber"><i class="bi bi-trophy-fill"></i></div>
+      <div>
+        <div class="stat-value">{{ courses[0].course if courses else '—' }}</div>
+        <div class="stat-label">Most Popular Course</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table card -->
+<div class="app-card">
+  <div class="p-3 p-md-4 pb-0">
+    <form class="row g-2" method="get">
+      <div class="col-12 col-sm-9 search-box">
+        <i class="bi bi-search"></i>
+        <input type="search" name="q" value="{{ search }}" class="form-control"
+               placeholder="Search by name, roll no, course or email">
+      </div>
+      <div class="col-12 col-sm-3 d-grid">
+        <button class="btn btn-primary-app" style="height:46px">Search</button>
+      </div>
+    </form>
+    <p class="text-muted small mt-3 mb-2">
+      {{ students|length }} student(s) found
+      {% if search %} for "<strong>{{ search }}</strong>" · <a href="{{ url_for('index') }}">clear</a>{% endif %}
+    </p>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table student-table">
+      <thead>
+        <tr>
+          <th>Student</th><th>Roll No</th><th>Phone</th><th>Course</th><th>Year</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for s in students %}
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-3">
+              <div class="avatar">{{ s.name[0]|upper }}</div>
+              <div>
+                <div class="fw-semibold">{{ s.name }}</div>
+                <div class="text-muted small">{{ s.email }}</div>
+              </div>
+            </div>
+          </td>
+          <td>{{ s.roll_no }}</td>
+          <td>{{ s.phone or '—' }}</td>
+          <td><span class="badge-course">{{ s.course }}</span></td>
+          <td><span class="badge-year">Year {{ s.year }}</span></td>
+          <td class="text-end text-nowrap">
+            <a href="{{ url_for('view', student_id=s.id) }}" class="icon-btn view" title="View"><i class="bi bi-eye-fill"></i></a>
+            <a href="{{ url_for('edit', student_id=s.id) }}" class="icon-btn edit" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+            <form action="{{ url_for('delete', student_id=s.id) }}" method="post" class="d-inline"
+                  onsubmit="return confirm('Delete this student? This cannot be undone.');">
+              <button class="icon-btn delete" title="Delete"><i class="bi bi-trash3-fill"></i></button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6">
+          <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            No students found.
+          </div>
+        </td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

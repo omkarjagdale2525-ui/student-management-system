@@ -16,25 +16,19 @@ Python · Flask · SQLite · Jinja2 · Bootstrap 5
 ## Screenshots
 
 ### Home Page
-![Home page](screenshots/home.png)
+![Home page](screenshots/home-page.png)
 
 ### Search
-![Search](screenshots/search.png)
+![Search](screenshots/search-student.png)
 
 ### Add Student
 ![Add student](screenshots/add-student.png)
 
-
-
 ### Edit Student
-![Edit student](screenshots/edit form.png)
+![Edit student](screenshots/edit-form.png)
 
 ### Student Details
 ![Student detail](screenshots/student-detail.png)
-
-
-
-
 
 ## Run Locally
 ```bash
